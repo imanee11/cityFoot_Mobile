@@ -27,7 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _obscureConfirm = true;
   bool _isLoading = false;
 
-  static const List<String> _civilites = ['M.', 'Mme', 'Autre'];
+  static const List<String> _civilites = ['M.', 'Mme.', 'Société'];
 
   @override
   void dispose() {
@@ -55,12 +55,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
       final userId = res.user?.id;
       if (userId == null) throw Exception('Erreur lors de la création du compte');
 
+      final prenom = _prenomCtrl.text.trim();
+      final nom = _nomCtrl.text.trim();
+      final email = _emailCtrl.text.trim();
+      final tel = _telCtrl.text.trim();
+      final fullName = '$prenom $nom'.trim();
+      final fullInfoParts = [fullName, if (tel.isNotEmpty) tel, if (email.isNotEmpty) email];
+      final fullInfo = fullInfoParts.join(' - ');
+
       await Supabase.instance.client.from(SupabaseConstants.memberTable).insert({
-        'Prénom': _prenomCtrl.text.trim(),
-        'Nom': _nomCtrl.text.trim(),
-        'Email': _emailCtrl.text.trim(),
-        'Téléphone': _telCtrl.text.trim(),
+        'Prénom': prenom,
+        'Nom': nom,
+        'Email': email,
+        'Téléphone': tel,
         'civilité': _civilite ?? '',
+        'Full info': fullInfo,
+        'Sport principal': 'foot',
+        'Type': 'client',
+        'Catégorie': 'Extérieur',
         'User': userId,
       });
 
