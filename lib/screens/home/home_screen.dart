@@ -280,9 +280,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               )
             else if (_upcoming.isEmpty)
-              SliverToBoxAdapter(
+              const SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   child: _EmptyMatchCard(),
                 ),
               )
@@ -290,6 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) => _HomeMatchCard(
+                    key: ValueKey(_upcoming[index].id),
                     reservation: _upcoming[index],
                     onTap: () => _onReservationTap(_upcoming[index]),
                   ),
@@ -333,7 +334,7 @@ class _HomeMatchCard extends StatefulWidget {
   final ReservationModel reservation;
   final VoidCallback onTap;
 
-  const _HomeMatchCard({required this.reservation, required this.onTap});
+  const _HomeMatchCard({super.key, required this.reservation, required this.onTap});
 
   @override
   State<_HomeMatchCard> createState() => _HomeMatchCardState();

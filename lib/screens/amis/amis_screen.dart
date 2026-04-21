@@ -147,6 +147,7 @@ class _AmisScreenState extends State<AmisScreen> {
           .from(SupabaseConstants.amisTable)
           .delete()
           .eq('id', ami.id);
+      if (!mounted) return;
       setState(() => _mesAmis.removeWhere((a) => a.id == ami.id));
       context.read<AppState>().setMesAmisCount(_mesAmis.length);
     } catch (e) {

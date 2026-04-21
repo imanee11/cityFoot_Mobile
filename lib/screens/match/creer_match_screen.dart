@@ -33,7 +33,7 @@ class _CreerMatchScreenState extends State<CreerMatchScreen> {
   bool _amisLoaded = false;
   final Set<int> _selectedAmiIds = {};
   String _inviteQuery = '';
-  int _stepDirection = 1;
+  final int _stepDirection = 1;
 
   static const List<String> _stepNames = [
     'Sport', 'Jour', 'Heure', 'Terrain', 'Confirmer', 'Inviter',
